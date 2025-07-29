@@ -121,7 +121,7 @@ export default function RandomNameSelector() {
   }
 
   return (
-    <div className="min-h-screen bg-white p-4">
+    <div className="min-h-screen bg-white p-4 my-0 py-[50px]">
       <div className="mx-auto max-w-4xl space-y-6">
         <div className="text-center space-y-2">
           <h1 className="text-4xl font-bold text-gray-900">ArawUday India 2025</h1>
