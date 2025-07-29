@@ -129,43 +129,45 @@ export default function RandomNameSelector() {
           <p className="text-gray-600">Upload a CSV/Excel file and randomly select pairs of names</p>
         </div>
 
-        {/* File Upload Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Upload className="h-5 w-5" />
-              Upload Attendee List
-            </CardTitle>
-            <CardDescription>
-              Upload a CSV or Excel file with names. Each name should be on a new line or separated by commas.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="file-upload">Choose File</Label>
-                <Input
-                  id="file-upload"
-                  type="file"
-                  accept=".csv,.xlsx,.xls"
-                  onChange={handleFileUpload}
-                  disabled={isUploading}
-                  className="mt-1"
-                />
-              </div>
-
-              {allNames.length > 0 && (
-                <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-200">
-                  <div className="flex items-center gap-2">
-                    <Users className="h-5 w-5 text-green-600" />
-                    <span className="text-green-800 font-medium">{allNames.length} names loaded</span>
-                  </div>
-                  <Badge variant="secondary">{remainingNames.length} remaining</Badge>
+        {/* File Upload Section - Only show when no names are loaded */}
+        {allNames.length === 0 && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Upload className="h-5 w-5" />
+                Upload Attendee List
+              </CardTitle>
+              <CardDescription>
+                Upload a CSV or Excel file with names. Each name should be on a new line or separated by commas.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="file-upload">Choose File</Label>
+                  <Input
+                    id="file-upload"
+                    type="file"
+                    accept=".csv,.xlsx,.xls"
+                    onChange={handleFileUpload}
+                    disabled={isUploading}
+                    className="mt-1"
+                  />
                 </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+
+                {allNames.length > 0 && (
+                  <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-200">
+                    <div className="flex items-center gap-2">
+                      <Users className="h-5 w-5 text-green-600" />
+                      <span className="text-green-800 font-medium">{allNames.length} names loaded</span>
+                    </div>
+                    <Badge variant="secondary">{remainingNames.length} remaining</Badge>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Selection Section */}
         {allNames.length > 0 && (
@@ -191,16 +193,16 @@ export default function RandomNameSelector() {
 
                 {/* Current Selection Display */}
                 {currentPair && (
-                  <div className="p-6 bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg border-2 border-purple-200">
-                    <h3 className="text-lg font-semibold text-center mb-4 text-purple-800">
+                  <div className="p-6 bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg border-2 border-purple-200 px-3.5 py-3.5">
+                    <h3 className="text-base font-semibold text-center mb-4 text-purple-800">
                       Round {currentPair.round} - Selected Pair
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="bg-white p-4 rounded-lg shadow-sm text-center">
-                        <div className="text-2xl font-bold text-purple-600">{currentPair.name1}</div>
+                      <div className="bg-white p-4 rounded-lg shadow-sm text-center px-2.5 py-2.5 leading-[1.15rem]">
+                        <div className="text-lg font-bold text-purple-600">{currentPair.name1}</div>
                       </div>
-                      <div className="bg-white p-4 rounded-lg shadow-sm text-center">
-                        <div className="text-2xl font-bold text-purple-600">{currentPair.name2}</div>
+                      <div className="bg-white p-4 rounded-lg shadow-sm text-center px-2.5 py-2.5 leading-[1.15rem]">
+                        <div className="text-lg font-bold text-purple-600">{currentPair.name2}</div>
                       </div>
                     </div>
                   </div>
