@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
-import { Upload, Users, Shuffle, RotateCcw } from "lucide-react"
+import { Upload, Users, Shuffle, RotateCcw, Trash2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 
 interface SelectedPair {
@@ -111,6 +111,32 @@ export default function RandomNameSelector() {
     setCurrentPair(newPair)
     setSelectedPairs((prev) => [...prev, newPair])
     setRemainingNames(updatedRemaining)
+  }
+
+  const removePairFromHistory = (pairToRemove: SelectedPair) => {
+    // Remove the pair from selected pairs
+    const updatedSelectedPairs = selectedPairs.filter((pair) => pair.round !== pairToRemove.round)
+    setSelectedPairs(updatedSelectedPairs)
+
+    // Add the names back to remaining names if they're not already there
+    const updatedRemainingNames = [...remainingNames]
+    if (!updatedRemainingNames.includes(pairToRemove.name1)) {
+      updatedRemainingNames.push(pairToRemove.name1)
+    }
+    if (!updatedRemainingNames.includes(pairToRemove.name2)) {
+      updatedRemainingNames.push(pairToRemove.name2)
+    }
+    setRemainingNames(updatedRemainingNames)
+
+    // If the removed pair was the current pair, clear it
+    if (currentPair && currentPair.round === pairToRemove.round) {
+      setCurrentPair(null)
+    }
+
+    toast({
+      title: "Pair removed",
+      description: `${pairToRemove.name1} and ${pairToRemove.name2} are now available for selection again.`,
+    })
   }
 
   const resetApp = () => {
@@ -224,18 +250,32 @@ export default function RandomNameSelector() {
           <Card>
             <CardHeader>
               <CardTitle>Selection History</CardTitle>
-              <CardDescription>All previously selected pairs</CardDescription>
+              <CardDescription>
+                All previously selected pairs (click trash icon to remove and make names available again)
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 {selectedPairs.map((pair, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div
+                    key={`round-${pair.round}`}
+                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  >
                     <div className="flex items-center gap-4">
                       <Badge variant="outline">Round {pair.round}</Badge>
                       <span className="font-medium">{pair.name1}</span>
                       <span className="text-gray-400">+</span>
                       <span className="font-medium">{pair.name2}</span>
                     </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => removePairFromHistory(pair)}
+                      className="text-red-500 hover:text-red-700 hover:bg-red-50 p-2"
+                      title="Remove this pair"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
                   </div>
                 ))}
               </div>
