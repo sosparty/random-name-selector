@@ -121,10 +121,11 @@ export default function RandomNameSelector() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen bg-white p-4">
       <div className="mx-auto max-w-4xl space-y-6">
         <div className="text-center space-y-2">
-          <h1 className="text-4xl font-bold text-gray-900">Random Name Selector</h1>
+          <h1 className="text-4xl font-bold text-gray-900">ArawUday India 2025</h1>
+          <h2 className="text-2xl font-semibold text-gray-700">SLGS Quiz Contest</h2>
           <p className="text-gray-600">Upload a CSV/Excel file and randomly select pairs of names</p>
         </div>
 
@@ -240,19 +241,16 @@ export default function RandomNameSelector() {
           </Card>
         )}
 
-        {/* Remaining Names */}
+        {/* Remaining Names Count */}
         {remainingNames.length > 0 && (
           <Card>
             <CardHeader>
-              <CardTitle>Remaining Names ({remainingNames.length})</CardTitle>
+              <CardTitle>Remaining Names</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-wrap gap-2">
-                {remainingNames.map((name, index) => (
-                  <Badge key={index} variant="secondary">
-                    {name}
-                  </Badge>
-                ))}
+              <div className="text-center">
+                <div className="text-3xl font-bold text-blue-600">{remainingNames.length}</div>
+                <p className="text-gray-600 mt-1">names left to select</p>
               </div>
             </CardContent>
           </Card>
